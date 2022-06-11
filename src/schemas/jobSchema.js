@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const collection = require("./../config/collections");
+const collections = require("./../config/collections");
+const defaults = require("./defaults");
 
 const JobSchema = new mongoose.Schema(
 	{
@@ -26,6 +27,7 @@ const JobSchema = new mongoose.Schema(
 				type: String,
 			},
 		},
+		...defaults.statesDefault,
 	},
 	{
 		versionKey: false,
@@ -33,4 +35,4 @@ const JobSchema = new mongoose.Schema(
 	},
 );
 
-module.exports = mongoose.model(collection.jobs, JobSchema);
+module.exports = mongoose.model(collections.jobs, JobSchema);

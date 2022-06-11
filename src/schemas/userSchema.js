@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const collection = require("./../config/collections");
+const collections = require("./../config/collections");
+const defaults = require("./defaults");
 
 const UserSchema = new mongoose.Schema(
 	{
@@ -47,6 +48,7 @@ const UserSchema = new mongoose.Schema(
 				],
 			},
 		},
+		...defaults.statesDefault,
 	},
 	{
 		versionKey: false,
@@ -54,4 +56,4 @@ const UserSchema = new mongoose.Schema(
 	},
 );
 
-module.exports = mongoose.model(collection.users, UserSchema);
+module.exports = mongoose.model(collections.users, UserSchema);
