@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const collection = require("./../config/collections");
 
 const JobSchema = new mongoose.Schema(
 	{
@@ -32,4 +33,4 @@ const JobSchema = new mongoose.Schema(
 	},
 );
 
-module.exports = mongoose.model("jobs", JobSchema);
+module.exports = mongoose.model(collection.jobs, JobSchema);

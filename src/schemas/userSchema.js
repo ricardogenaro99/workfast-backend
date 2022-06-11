@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const collection = require("./../config/collections");
 
 const UserSchema = new mongoose.Schema(
 	{
@@ -53,4 +54,4 @@ const UserSchema = new mongoose.Schema(
 	},
 );
 
-module.exports = mongoose.model("users", UserSchema);
+module.exports = mongoose.model(collection.users, UserSchema);
