@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const schema = require("../schemas/userSchema");
+const schema = require("../schemas/jobSchema");
 
 const parseId = (id) => {
 	return mongoose.Types.ObjectId(id);

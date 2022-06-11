@@ -7,6 +7,7 @@ const app = express();
 const port = 3001;
 
 const userRouters = require("./src/routes/userRoute");
+const jobRouters = require("./src/routes/jobRoute");
 
 app.use(cors(config.application.cors.server));
 
@@ -23,6 +24,7 @@ app.use(
 );
 
 app.use(userRouters);
+app.use(jobRouters);
 
 app.listen(port, () => {
 	console.log("The application is online");
