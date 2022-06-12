@@ -26,8 +26,8 @@ app.use(
 app.use(userRouters);
 app.use(jobRouters);
 
-app.listen(process.env.PORT || "3001", () => {
-	console.log("The application is online on port", process.env.PORT || "3001");
+app.listen(port, () => {
+	console.log("The application is online on port", port);
 });
 
 initDB();
