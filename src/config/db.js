@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
-const DB_URI = "mongodb+srv://workfast:admin@cluster0.qmpuy.mongodb.net/workfastdb";
+require("dotenv").config();
+const DB_URI = process.env.MONGODB_URL;
 
 module.exports = () => {
 	const connect = () => {
