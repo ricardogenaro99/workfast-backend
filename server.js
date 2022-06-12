@@ -4,7 +4,7 @@ const cors = require("cors");
 const config = require("./src/config/config");
 const bodyParser = require("body-parser");
 const app = express();
-const port = 3001;
+const port = process.env.PORT || "3001";
 
 const userRouters = require("./src/routes/userRoute");
 const jobRouters = require("./src/routes/jobRoute");
