@@ -7,7 +7,7 @@ const parseId = (id) => {
 
 exports.getAllData = (req, res) => {
 	const { email } = req.query;
-	const filter = authId ? { "details.email": email } : {};
+	const filter = email ? { "details.email": email } : {};
 	schema.find(filter, (err, docs) => {
 		res.send({
 			data: docs,
