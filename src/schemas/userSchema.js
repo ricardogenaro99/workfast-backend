@@ -5,15 +5,18 @@ const defaults = require("./defaults");
 const UserSchema = new mongoose.Schema(
 	{
 		details: {
+			authId: {
+				type: String,
+				unique: true,
+				required: true,
+			},
 			role: {
 				type: String,
 			},
 			email: {
 				type: String,
 				unique: true,
-			},
-			password: {
-				type: String,
+				required: true,
 			},
 			name: {
 				type: String,
