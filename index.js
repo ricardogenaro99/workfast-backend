@@ -6,10 +6,12 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || "3001";
 
+const { firebaseApp } = require("./src/config/firebase");
+
 const userRouters = require("./src/routes/userRoute");
 const jobRouters = require("./src/routes/jobRoute");
 
-app.use(cors(config.application.cors.server));
+app.use(cors(config.application.cors));
 
 app.use(
 	bodyParser.json({
