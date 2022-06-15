@@ -20,17 +20,19 @@ const UserSchema = new mongoose.Schema(
 			},
 			name: {
 				type: String,
+				default: "",
 			},
 			lastname: {
 				type: String,
+				default: "",
 			},
-			locations: {
-				city: {
-					type: String,
-				},
-				country: {
-					type: String,
-				},
+			city: {
+				type: String,
+				default: "",
+			},
+			country: {
+				type: String,
+				default: "",
 			},
 		},
 		jobPreferences: {

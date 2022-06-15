@@ -1,6 +1,7 @@
 const { firebaseApp } = require("../config/firebase");
 const { getAuth } = require("firebase-admin/auth");
 const { messages } = require("../messages/messages");
+const mongoose = require("mongoose");
 
 authorization = async (req) => {
 	try {
