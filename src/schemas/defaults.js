@@ -1,4 +1,9 @@
 const statesDefault = {
+	actived: {
+		type: Boolean,
+		default: false,
+		required: true,
+	},
 	deleted: {
 		type: Boolean,
 		default: false,

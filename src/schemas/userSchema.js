@@ -35,24 +35,21 @@ const UserSchema = new mongoose.Schema(
 				default: "",
 			},
 		},
-		jobPreferences: {
-			tags: {
-				type: Array,
-			},
-			locations: {
-				type: [
-					{
-						city: {
-							type: Array,
-						},
-						country: {
-							type: String,
-						},
-						_id: false,
-					},
-				],
-			},
+		jobTags: {
+			type: Array,
 		},
+		jobFavorites: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: collections.jobs,
+			},
+		],
+		jobPostulated: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: collections.jobs,
+			},
+		],
 		...defaults.statesDefault,
 	},
 	{

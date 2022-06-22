@@ -7,24 +7,36 @@ const JobSchema = new mongoose.Schema(
 		details: {
 			name: {
 				type: String,
+				required: true,
 			},
-			locations: {
-				type: [
-					{
-						city: {
-							type: Array,
-						},
-						country: {
-							type: String,
-						},
-						_id: false,
-					},
-				],
+			description: {
+				type: String,
+				required: true,
+			},
+			city: {
+				type: String,
+				default: "",
+			},
+			country: {
+				type: String,
+				default: "",
+			},
+			tags: {
+				type: Array,
 			},
 		},
 		enterpiseDetails: {
 			name: {
 				type: String,
+				default: "",
+			},
+			city: {
+				type: String,
+				default: "",
+			},
+			country: {
+				type: String,
+				default: "",
 			},
 		},
 		...defaults.statesDefault,
