@@ -1,3 +1,4 @@
+const collections = require("./../config/collections");
 const schema = require("../schemas/userSchema");
 const functions = require("./functions");
 
@@ -18,13 +19,15 @@ exports.getAllData = (req, res) => {
 exports.getData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { id } = req.params;
-		schema.findOne({ _id: functions.parseId(id) }, (err, docs) => {
-			if (err) {
-				res.status(422).send({ error: err });
-			} else {
-				res.send({ data: docs });
-			}
-		});
+		schema
+			.findOne({ _id: functions.parseId(id) }, (err, docs) => {
+				if (err) {
+					res.status(422).send({ error: err });
+				} else {
+					res.send({ data: docs });
+				}
+			})
+			// .populate("jobFavorites");
 	});
 };
 
