@@ -1,6 +1,7 @@
 const allowOrigins = [
 	"http://localhost:3000",
 	"https://workfast-frontend.herokuapp.com",
+	"https://hotmart-choquehuanca-palli.herokuapp.com",
 ];
 
 const config = {
