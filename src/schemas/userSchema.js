@@ -35,6 +35,11 @@ const UserSchema = new mongoose.Schema(
 				default: "",
 			},
 		},
+		isPremium: {
+			type: Boolean,
+			default: false,
+		},
+		profileForm: {},
 		jobTags: {
 			type: Array,
 		},
