@@ -3,7 +3,7 @@ const { getAuth } = require("firebase-admin/auth");
 const { messages } = require("../messages/messages");
 const mongoose = require("mongoose");
 
-authorization = async (req) => {
+const authorization = async (req) => {
 	try {
 		const bearer = req.headers.authorization.split(" ")[1];
 		await getAuth(firebaseApp).verifyIdToken(bearer);
