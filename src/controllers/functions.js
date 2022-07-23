@@ -14,13 +14,18 @@ const authorization = async (req) => {
 };
 
 exports.parseId = (id) => {
+	console.log(id);
 	return mongoose.Types.ObjectId(id);
 };
 
 exports.reqAuthorization = async (req, res, callback) => {
 	const authorizationRes = await authorization(req);
 	if (authorizationRes) {
-		callback();
+		try {
+			callback();
+		} catch (error) {
+			console.log("error", error);
+		}
 	} else {
 		res.status(401).send({ error: messages.RES_401 });
 	}
