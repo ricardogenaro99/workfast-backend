@@ -14,7 +14,6 @@ const authorization = async (req) => {
 };
 
 exports.parseId = (id) => {
-	console.log(id);
 	return mongoose.Types.ObjectId(id);
 };
 
