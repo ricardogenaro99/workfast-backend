@@ -1,5 +1,6 @@
 const Stripe = require("stripe");
 const schema = require("../schemas/checkoutSchema");
+const userSchema = require("../schemas/userSchema");
 const functions = require("./functions");
 require("dotenv").config();
 
@@ -47,20 +48,52 @@ exports.updateData = async (req, res) => {
 exports.insertData = async (req, res) => {
 	functions.reqAuthorization(req, res, async () => {
 		const { id, userDb } = await req.body;
+		const userId = userDb._id;
 		try {
-			const docs = await stripe.paymentIntents.create({
+			const stripeData = await stripe.paymentIntents.create({
 				amount: 5 * 100,
 				currency: "USD",
-				description: "Monthly subscription to WORKFAST",
+				description: `Monthly subscription to WORKFAST - ${userId} - ${userDb.details.email}`,
 				payment_method: id,
 				confirm: true,
 				receipt_email: userDb.details.email,
 				metadata: {
 					...userDb.details,
-					_id: userDb._id,
+					_id: userId,
 				},
 			});
-			res.send({ data: docs });
+
+			const data = {
+				userId,
+				stripeData,
+			};
+
+			schema.create(data, (errCheckout, docsCheckout) => {
+				if (errCheckout) {
+					res.status(422).send({ error: errCheckout });
+				} else {
+					const premium = {
+						isPremium: true,
+						lastPayment: docsCheckout.createdAt,
+						checkoutId: docsCheckout._id,
+					};
+					userSchema.updateOne(
+						{ _id: functions.parseId(userId) },
+						{ premium },
+						(errUser, docsUser) => {
+							if (errUser) {
+								res.status(422).send({
+									error: { errCheckout, errUser },
+								});
+							} else {
+								res.send({
+									data: { docsCheckout, docsUser },
+								});
+							}
+						},
+					);
+				}
+			});
 		} catch (err) {
 			res.status(422).send({ error: err });
 		}

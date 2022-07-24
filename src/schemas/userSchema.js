@@ -35,10 +35,20 @@ const UserSchema = new mongoose.Schema(
 				default: "",
 			},
 		},
-		isPremium: {
-			type: Boolean,
-			default: false,
+		premium: {
+			isPremium: {
+				type: Boolean,
+				default: false,
+			},
+			lastPayment: {
+				type: Date,
+			},
+			checkoutId: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: collections.checkouts,
+			},
 		},
+
 		profileForm: {},
 		jobTags: {
 			type: Array,
@@ -56,6 +66,11 @@ const UserSchema = new mongoose.Schema(
 			},
 		],
 		...defaults.statesDefault,
+		actived: {
+			type: Boolean,
+			default: true,
+			required: true,
+		},
 	},
 	{
 		versionKey: false,
