@@ -18,14 +18,16 @@ const upgradeMembership = (userData) => {
 					...userData.premium,
 					isPremium: false,
 				};
-				console.log(premium);
 				try {
 					schema.updateOne(
 						{ _id: functions.parseId(userData._id) },
 						{ premium },
+						(req, res) => {
+							console.log(res);
+						},
 					);
 				} catch (error) {
-					console.log(error);
+					console.error(error);
 				}
 				return;
 			}
@@ -33,6 +35,7 @@ const upgradeMembership = (userData) => {
 	}
 };
 
+// Default controllers
 exports.getAllData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { email } = req.query;
@@ -98,6 +101,18 @@ exports.deleteData = async (req, res) => {
 				res.send({ data: docs });
 			}
 		});
+	});
+};
+
+// Custom controllers
+exports.getUserByEmail = (req, res) => {
+	const { email } = req.body;
+	schema.find({ "details.email": email }, (err, docs) => {
+		if (err) {
+			res.status(422).send({ error: err });
+		} else {
+			res.send({ data: docs });
+		}
 	});
 };
 
