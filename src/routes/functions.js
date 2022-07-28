@@ -1,8 +1,7 @@
 const express = require("express");
 
-exports.generateRouterModule = (controller, path) => {
+exports.generateRouterModule = (controller, apiPath) => {
 	const router = express.Router();
-	const apiPath = `/api/${path}`;
 	
 	router.get(`${apiPath}`, controller.getAllData);
 	router.get(`${apiPath}/:id`, controller.getData);
