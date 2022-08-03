@@ -3,7 +3,7 @@ const collections = require("../config/collections");
 
 const CheckoutSchema = new mongoose.Schema(
 	{
-		userId: {
+		userRef: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: collections.users,
 		},
