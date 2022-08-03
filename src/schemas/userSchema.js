@@ -4,14 +4,16 @@ const defaults = require("./defaults");
 
 const UserSchema = new mongoose.Schema(
 	{
+		roleRef: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: collections.roles,
+			required: true,
+		},
 		details: {
 			authId: {
 				type: String,
 				unique: true,
 				required: true,
-			},
-			role: {
-				type: String,
 			},
 			email: {
 				type: String,

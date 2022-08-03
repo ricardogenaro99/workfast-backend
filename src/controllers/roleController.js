@@ -1,32 +1,24 @@
-const schema = require("../schemas/jobSchema");
+const schema = require("../schemas/roleSchema");
 const functions = require("./functions");
 
 exports.getAllData = (req, res) => {
-	functions.reqAuthorization(req, res, () => {
-		schema
-			.find({}, (err, docs) => {
-				if (err) {
-					res.status(422).send({ error: err });
-				} else {
-					res.send({ data: docs });
-				}
-			})
-			.populate("enterpriseRef");
+	schema.find({}, (err, docs) => {
+		if (err) {
+			res.status(422).send({ error: err });
+		} else {
+			res.send({ data: docs });
+		}
 	});
 };
 
 exports.getData = (req, res) => {
-	functions.reqAuthorization(req, res, () => {
-		const { id } = req.params;
-		schema
-			.findOne({ _id: functions.parseId(id) }, (err, docs) => {
-				if (err) {
-					res.status(422).send({ error: err });
-				} else {
-					res.send({ data: docs });
-				}
-			})
-			.populate("enterpriseRef");
+	const { id } = req.params;
+	schema.findOne({ _id: functions.parseId(id) }, (err, docs) => {
+		if (err) {
+			res.status(422).send({ error: err });
+		} else {
+			res.send({ data: docs });
+		}
 	});
 };
 
@@ -45,7 +37,6 @@ exports.updateData = async (req, res) => {
 };
 
 exports.insertData = async (req, res) => {
-	// functions.reqAuthorization(req, res, () => {
 	const data = req.body;
 	schema.create(data, (err, docs) => {
 		if (err) {
@@ -54,7 +45,6 @@ exports.insertData = async (req, res) => {
 			res.send({ data: docs });
 		}
 	});
-	// });
 };
 
 exports.deleteData = async (req, res) => {
