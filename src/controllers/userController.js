@@ -119,6 +119,9 @@ exports.getUserByEmail = (req, res) => {
 exports.saveUser = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
+		data.roleId = data.roleId
+			? data.roleId
+			: functions.parseId("62eaaa923cdf431757494e6b");
 		schema.create(data, (err, docs) => {
 			if (err) {
 				res.status(422).send({ error: err });
@@ -146,19 +149,54 @@ exports.saveDetails = async (req, res) => {
 	});
 };
 
+exports.isFavoriteJob = async (req, res) => {
+	functions.reqAuthorization(req, res, () => {
+		const { userId, jobId } = req.body;
+		schema.findOne({ _id: functions.parseId(userId) }, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				const pos = docs.jobFavorites.findIndex(
+					(e) => e.toString() === functions.parseId(jobId).toString(),
+				);
+				res.send({ data: pos !== -1 });
+			}
+		});
+	});
+};
+
 exports.saveFavoriteJobs = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
-		const { userId, jobFavorites } = req.body;
-		schema.updateOne(
-			{ _id: functions.parseId(userId) },
-			{ jobFavorites },
-			(err, docs) => {
-				if (err) {
-					res.status(422).send({ error: err });
+		const { userId, jobId } = req.body;
+		schema.findOne({ _id: functions.parseId(userId) }, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				let message = "";
+				const pos = docs.jobFavorites.findIndex(
+					(e) => e.toString() === functions.parseId(jobId).toString(),
+				);
+
+				if (pos === -1) {
+					docs.jobFavorites.push(functions.parseId(jobId));
+					message = "El empleo se agregó a su lista de favoritos";
 				} else {
-					res.send({ data: docs });
+					docs.jobFavorites.splice(pos, 1);
+					message = "El empleo se quito a su lista de favoritos";
 				}
-			},
-		);
+
+				schema.updateOne(
+					{ _id: functions.parseId(userId) },
+					{ jobFavorites: docs.jobFavorites },
+					(errUpdate) => {
+						if (errUpdate) {
+							res.status(422).send({ error: errUpdate });
+						} else {
+							res.send({ message });
+						}
+					},
+				);
+			}
+		});
 	});
 };

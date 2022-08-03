@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const collections = require("./../config/collections");
+const collections = require("../config/collections");
 const defaults = require("./defaults");
 
-const JobSchema = new mongoose.Schema(
+const EnterpriseSchema = new mongoose.Schema(
 	{
 		details: {
 			name: {
@@ -21,18 +21,15 @@ const JobSchema = new mongoose.Schema(
 				type: String,
 				default: "",
 			},
-			tags: {
-				type: Array,
-				default: [],
-			},
 			image: {
 				type: String,
 				default: "",
 			},
 		},
-		enterpriseRef: {
+		userRef: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: collections.enterprises,
+			ref: collections.users,
+			required: true,
 		},
 		...defaults.statesDefault,
 	},
@@ -42,4 +39,4 @@ const JobSchema = new mongoose.Schema(
 	},
 );
 
-module.exports = mongoose.model(collections.jobs, JobSchema);
+module.exports = mongoose.model(collections.enterprises, EnterpriseSchema);
