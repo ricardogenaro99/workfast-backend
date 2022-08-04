@@ -75,7 +75,7 @@ exports.insertData = async (req, res) => {
 					const premium = {
 						isPremium: true,
 						lastPayment: docsCheckout.createdAt,
-						checkoutId: docsCheckout._id,
+						checkoutRef: docsCheckout._id,
 					};
 					userSchema.updateOne(
 						{ _id: functions.parseId(userId) },
