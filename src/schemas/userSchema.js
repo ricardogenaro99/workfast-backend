@@ -45,7 +45,7 @@ const UserSchema = new mongoose.Schema(
 			lastPayment: {
 				type: Date,
 			},
-			checkoutId: {
+			checkoutRef: {
 				type: mongoose.Schema.Types.ObjectId,
 				ref: collections.checkouts,
 			},
