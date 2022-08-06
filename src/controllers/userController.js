@@ -60,7 +60,7 @@ exports.getData = (req, res) => {
 				upgradeMembership(docs);
 				res.send({ data: docs });
 			}
-		});
+		}).populate("roleRef");
 	});
 };
 
@@ -107,13 +107,13 @@ exports.deleteData = async (req, res) => {
 // Custom controllers
 exports.getUserByEmail = (req, res) => {
 	const { email } = req.body;
-	schema.find({ "details.email": email }, (err, docs) => {
+	schema.findOne({ "details.email": email }, (err, docs) => {
 		if (err) {
 			res.status(422).send({ error: err });
 		} else {
 			res.send({ data: docs });
 		}
-	});
+	}).populate("roleRef");
 };
 
 exports.saveUser = async (req, res) => {
