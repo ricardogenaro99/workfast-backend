@@ -45,7 +45,7 @@ exports.updateData = async (req, res) => {
 };
 
 exports.insertData = async (req, res) => {
-	// functions.reqAuthorization(req, res, () => {
+	functions.reqAuthorization(req, res, () => {
 	const data = req.body;
 	schema.create(data, (err, docs) => {
 		if (err) {
@@ -54,7 +54,7 @@ exports.insertData = async (req, res) => {
 			res.send({ data: docs });
 		}
 	});
-	// });
+	});
 };
 
 exports.deleteData = async (req, res) => {
