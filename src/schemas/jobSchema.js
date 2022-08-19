@@ -29,6 +29,10 @@ const JobSchema = new mongoose.Schema(
 				type: String,
 				default: "",
 			},
+			position: {
+				type: String,
+				default: "",
+			},
 		},
 		enterpriseRef: {
 			type: mongoose.Schema.Types.ObjectId,

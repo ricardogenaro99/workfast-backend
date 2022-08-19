@@ -126,13 +126,15 @@ exports.isMatch = async (req, res) => {
 exports.getByUser = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { userRef } = req.body;
-		schema.find({ userRef: functions.parseId(userRef) }, (err, docs) => {
-			if (err) {
-				res.status(422).send({ error: err });
-			} else {
-				res.send({ data: docs });
-			}
-		});
+		schema
+			.find({ userRef: functions.parseId(userRef) }, (err, docs) => {
+				if (err) {
+					res.status(422).send({ error: err });
+				} else {
+					res.send({ data: docs });
+				}
+			})
+			.populate({ path: "jobRef", populate: { path: "enterpriseRef" } });
 	});
 };
 
