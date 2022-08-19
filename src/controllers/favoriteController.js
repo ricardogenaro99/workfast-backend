@@ -1,4 +1,4 @@
-const schema = require("../schemas/postulateSchema");
+const schema = require("../schemas/favoriteSchema");
 const functions = require("./functions");
 const { messages } = require("../messages/messages");
 
@@ -67,10 +67,28 @@ exports.deleteData = async (req, res) => {
 	});
 };
 
+// Custom controllers
+
 exports.matchUserJob = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
-		schema.findOne(
+		schema.create(data, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				res.send({
+					message: messages.FAVORITE,
+					data: docs,
+				});
+			}
+		});
+	});
+};
+
+exports.unmatchUserJob = async (req, res) => {
+	functions.reqAuthorization(req, res, () => {
+		const data = req.body;
+		schema.deleteOne(
 			{
 				userRef: functions.parseId(data.userRef),
 				jobRef: functions.parseId(data.jobRef),
@@ -79,34 +97,21 @@ exports.matchUserJob = async (req, res) => {
 				if (err) {
 					res.status(422).send({ error: err });
 				} else {
-					if (!docs) {
-						schema.create(data, (errCreate, docsCreate) => {
-							if (errCreate) {
-								res.status(422).send({ error: errCreate });
-							} else {
-								res.send({
-									message: messages.POSTULATE_DONE,
-									data: docsCreate,
-								});
-							}
-						});
-					} else {
-						res.send({
-							message: messages.POSTULATE_MATCH,
-							data: docs,
-						});
-					}
+					res.send({ message: messages.UNFAVORITE, data: docs });
 				}
 			},
 		);
 	});
 };
 
-exports.getByUserJob = async (req, res) => {
+exports.isMatch = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
-		const { userId, jobId } = req.body;
+		const { userRef, jobRef } = req.body;
 		schema.findOne(
-			{ userRef: functions.parseId(userId), jobRef: functions.parseId(jobId) },
+			{
+				userRef: functions.parseId(userRef),
+				jobRef: functions.parseId(jobRef),
+			},
 			(err, docs) => {
 				if (err) {
 					res.status(422).send({ error: err });
@@ -115,5 +120,31 @@ exports.getByUserJob = async (req, res) => {
 				}
 			},
 		);
+	});
+};
+
+exports.getByUser = async (req, res) => {
+	functions.reqAuthorization(req, res, () => {
+		const { userId } = req.body;
+		schema.find({ userRef: functions.parseId(userId) }, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				res.send({ data: docs });
+			}
+		});
+	});
+};
+
+exports.getByJob = async (req, res) => {
+	functions.reqAuthorization(req, res, () => {
+		const { jobId } = req.body;
+		schema.find({ jobRef: functions.parseId(jobId) }, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				res.send({ data: docs });
+			}
+		});
 	});
 };

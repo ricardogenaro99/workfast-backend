@@ -15,7 +15,7 @@ exports.reqAuthorization = async (req, res, callback) => {
 		try {
 			callback();
 		} catch (error) {
-			console.log("error", error);
+			console.error("error", error);
 		}
 	} else {
 		res.status(401).send({ error: messages.RES_401 });

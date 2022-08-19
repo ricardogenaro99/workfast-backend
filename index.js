@@ -16,6 +16,7 @@ app.use(routes.checkoutRoutes);
 app.use(routes.roleRoutes);
 app.use(routes.enterpriseRoutes);
 app.use(routes.postulateRoutes);
+app.use(routes.favoriteRoutes);
 
 app.listen(port, () => {
 	console.log("The application is online on port:", port);
