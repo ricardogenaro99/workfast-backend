@@ -104,9 +104,12 @@ exports.matchUserJob = async (req, res) => {
 
 exports.getByUserJob = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
-		const { userId, jobId } = req.body;
+		const { userRef, jobRef } = req.body;
 		schema.findOne(
-			{ userRef: functions.parseId(userId), jobRef: functions.parseId(jobId) },
+			{
+				userRef: functions.parseId(userRef),
+				jobRef: functions.parseId(jobRef),
+			},
 			(err, docs) => {
 				if (err) {
 					res.status(422).send({ error: err });
@@ -115,5 +118,18 @@ exports.getByUserJob = async (req, res) => {
 				}
 			},
 		);
+	});
+};
+
+exports.getByUser = async (req, res) => {
+	functions.reqAuthorization(req, res, () => {
+		const { userRef } = req.body;
+		schema.find({ userRef: functions.parseId(userRef) }, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				res.send({ data: docs });
+			}
+		});
 	});
 };
