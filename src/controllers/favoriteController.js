@@ -125,8 +125,8 @@ exports.isMatch = async (req, res) => {
 
 exports.getByUser = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
-		const { userId } = req.body;
-		schema.find({ userRef: functions.parseId(userId) }, (err, docs) => {
+		const { userRef } = req.body;
+		schema.find({ userRef: functions.parseId(userRef) }, (err, docs) => {
 			if (err) {
 				res.status(422).send({ error: err });
 			} else {
@@ -138,8 +138,8 @@ exports.getByUser = async (req, res) => {
 
 exports.getByJob = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
-		const { jobId } = req.body;
-		schema.find({ jobRef: functions.parseId(jobId) }, (err, docs) => {
+		const { jobRef } = req.body;
+		schema.find({ jobRef: functions.parseId(jobRef) }, (err, docs) => {
 			if (err) {
 				res.status(422).send({ error: err });
 			} else {
