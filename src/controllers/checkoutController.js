@@ -47,7 +47,6 @@ exports.updateData = async (req, res) => {
 
 exports.insertData = async (req, res) => {
 	functions.reqAuthorization(req, res, async () => {
-		console.log(1)
 		const { id, userDb } = await req.body;
 		const userId = userDb._id;
 		try {
@@ -68,15 +67,11 @@ exports.insertData = async (req, res) => {
 				userRef: userId,
 				stripeData,
 			};
-			console.log(2)
+
 			schema.create(data, (errCheckout, docsCheckout) => {
-				console.log(3)
-				console.log(docsCheckout)
 				if (errCheckout) {
-					console.log(4)
 					res.status(422).send({ error: errCheckout });
 				} else {
-					console.log(5)
 					const premium = {
 						isPremium: true,
 						lastPayment: docsCheckout.createdAt,
@@ -87,12 +82,10 @@ exports.insertData = async (req, res) => {
 						{ premium },
 						(errUser, docsUser) => {
 							if (errUser) {
-								console.log(6)
 								res.status(422).send({
 									error: { errCheckout, errUser },
 								});
 							} else {
-								console.log(7)
 								res.send({
 									data: { docsCheckout, docsUser },
 								});
