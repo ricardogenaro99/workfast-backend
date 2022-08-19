@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 require("dotenv").config();
-const DB_URI = process.env.MONGODB_URL;
+const DB_URI = process.env.MONGODB_URL || "mongodb://localhost:27017/workfastdb";
 
 module.exports = () => {
 	const connect = () => {
