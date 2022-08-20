@@ -105,7 +105,6 @@ exports.deleteData = async (req, res) => {
 	});
 };
 
-// Custom controllers
 exports.getUserByEmail = (req, res) => {
 	const { email } = req.body;
 	schema

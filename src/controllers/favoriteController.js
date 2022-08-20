@@ -67,8 +67,6 @@ exports.deleteData = async (req, res) => {
 	});
 };
 
-// Custom controllers
-
 exports.matchUserJob = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
@@ -101,6 +99,33 @@ exports.unmatchUserJob = async (req, res) => {
 				}
 			},
 		);
+	});
+};
+
+exports.unmatchByIds = async (req, res) => {
+	functions.reqAuthorization(req, res, () => {
+		const data = req.body;
+		const favorites = Array.isArray(data?.favoritesId)
+			? data?.favoritesId
+			: [data?.favoritesId];
+		const errors = [];
+		const docs = [];
+
+		favorites.forEach((id) => {
+			schema.deleteOne({ _id: functions.parseId(id) }, (err, doc) => {
+				if (err) {
+					errors.push({ error: err, favoriteId: id });
+				} else {
+					docs.push(id);
+				}
+			});
+		});
+
+		if (errors.length === 0) {
+			res.send({ message: messages.UNFAVORITES, data: docs });
+		} else {
+			res.send({ message: messages.UNFAVORITES, errors, data: docs });
+		}
 	});
 };
 
