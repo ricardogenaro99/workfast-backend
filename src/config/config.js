@@ -1,7 +1,7 @@
 const allowOrigins = [
 	"http://localhost:3000",
-	"https://workfast-frontend.herokuapp.com",
-	"https://workfast-recruiter-frontend.herokuapp.com",
+	"https://workfast-postulate.herokuapp.com",
+	"https://workfast-recruiter.herokuapp.com",
 ];
 
 const config = {
@@ -22,4 +22,3 @@ const config = {
 };
 
 module.exports = config;
-
