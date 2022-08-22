@@ -5,7 +5,7 @@ const collections = require("../config/collections");
 const apiPath = `/api/${collections.users}`;
 const router = functions.generateRouterModule(controller, apiPath);
 
-router.post(`${apiPath}/get-user-email`, controller.getUserByEmail);
+router.post(`${apiPath}/get-by-email`, controller.getUserByEmail);
 router.post(`${apiPath}/save-user`, controller.saveUser);
 router.post(`${apiPath}/save-details`, controller.saveDetails);
 

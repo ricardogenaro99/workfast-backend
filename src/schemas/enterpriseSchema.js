@@ -32,6 +32,11 @@ const EnterpriseSchema = new mongoose.Schema(
 			required: true,
 		},
 		...defaults.statesDefault,
+		isComplete: {
+			type: Boolean,
+			default: false,
+			required: true,
+		},
 	},
 	{
 		versionKey: false,

@@ -56,9 +56,9 @@ const UserSchema = new mongoose.Schema(
 			type: Array,
 		},
 		...defaults.statesDefault,
-		actived: {
+		isComplete: {
 			type: Boolean,
-			default: true,
+			default: false,
 			required: true,
 		},
 	},

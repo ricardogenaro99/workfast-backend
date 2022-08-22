@@ -42,14 +42,14 @@ exports.updateData = async (req, res) => {
 
 exports.insertData = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
-	const data = req.body;
-	schema.create(data, (err, docs) => {
-		if (err) {
-			res.status(422).send({ error: err });
-		} else {
-			res.send({ data: docs });
-		}
-	});
+		const data = req.body;
+		schema.create(data, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				res.send({ data: docs });
+			}
+		});
 	});
 };
 
@@ -63,5 +63,44 @@ exports.deleteData = async (req, res) => {
 				res.send({ data: docs });
 			}
 		});
+	});
+};
+
+exports.getEnterpriseByUser = (req, res) => {
+	const { userRef } = req.body;
+	schema.findOne({ userRef: functions.parseId(userRef) }, (err, docs) => {
+		if (err) {
+			res.status(422).send({ error: err });
+		} else {
+			res.send({ data: docs });
+		}
+	});
+};
+
+exports.saveEnterprise = async (req, res) => {
+	const data = req.body;
+	schema.create(data, (err, docs) => {
+		if (err) {
+			res.status(422).send({ error: err });
+		} else {
+			res.send({ data: docs });
+		}
+	});
+};
+
+exports.saveDetails = async (req, res) => {
+	functions.reqAuthorization(req, res, () => {
+		const { enterpriseId, details } = req.body;
+		schema.updateOne(
+			{ _id: functions.parseId(enterpriseId) },
+			{ details, isComplete: true },
+			(err, docs) => {
+				if (err) {
+					res.status(422).send({ error: err });
+				} else {
+					res.send({ data: docs });
+				}
+			},
+		);
 	});
 };
