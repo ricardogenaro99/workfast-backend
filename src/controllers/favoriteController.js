@@ -112,7 +112,7 @@ exports.unmatchByIds = async (req, res) => {
 		const docs = [];
 
 		favorites.forEach((id) => {
-			schema.deleteOne({ _id: functions.parseId(id) }, (err, doc) => {
+			schema.deleteOne({ _id: functions.parseId(id) }, (err) => {
 				if (err) {
 					errors.push({ error: err, favoriteId: id });
 				} else {

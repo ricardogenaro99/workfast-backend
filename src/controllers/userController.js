@@ -22,7 +22,7 @@ const upgradeMembership = (userData) => {
 					schema.updateOne(
 						{ _id: functions.parseId(userData._id) },
 						{ premium },
-						(req, res) => {
+						(_req, res) => {
 							console.log(res);
 						},
 					);
