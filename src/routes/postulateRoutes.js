@@ -6,7 +6,7 @@ const apiPath = `/api/${collections.postulates}`;
 const router = functions.generateRouterModule(controller, apiPath);
 
 router.post(`${apiPath}/match-user-job`, controller.matchUserJob);
-router.post(`${apiPath}/get-user-job`, controller.getByUserJob);
+router.post(`${apiPath}/get-by-user-job`, controller.getByUserJob);
 router.post(`${apiPath}/get-by-user`, controller.getByUser);
 
 module.exports = router;

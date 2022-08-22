@@ -119,18 +119,16 @@ exports.getUserByEmail = (req, res) => {
 };
 
 exports.saveUser = async (req, res) => {
-	functions.reqAuthorization(req, res, () => {
-		const data = req.body;
-		data.roleRef = data.roleRef
-			? data.roleRef
-			: functions.parseId("62eaaa923cdf431757494e6b");
-		schema.create(data, (err, docs) => {
-			if (err) {
-				res.status(422).send({ error: err });
-			} else {
-				res.send({ data: docs });
-			}
-		});
+	const data = req.body;
+	data.roleRef = data.roleRef
+		? data.roleRef
+		: functions.parseId("62eaaa923cdf431757494e6b");
+	schema.create(data, (err, docs) => {
+		if (err) {
+			res.status(422).send({ error: err });
+		} else {
+			res.send({ data: docs });
+		}
 	});
 };
 
@@ -139,7 +137,7 @@ exports.saveDetails = async (req, res) => {
 		const { userId, details } = req.body;
 		schema.updateOne(
 			{ _id: functions.parseId(userId) },
-			{ details },
+			{ details, isComplete: true },
 			(err, docs) => {
 				if (err) {
 					res.status(422).send({ error: err });

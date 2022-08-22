@@ -1,5 +1,6 @@
 const allowOrigins = [
 	"http://localhost:3000",
+	"http://localhost:3001",
 	"https://workfast-postulate.herokuapp.com",
 	"https://workfast-recruiter.herokuapp.com",
 ];

@@ -3,12 +3,25 @@ const initDB = require("./src/config/db");
 const cors = require("cors");
 const config = require("./src/config/config");
 const app = express();
-const port = process.env.PORT || "3001";
+const port = process.env.PORT || "4000";
 const routes = require("./src/routes/");
 
 app.use(express.json());
 
 app.use(cors(config.application.cors));
+
+app.all("*", (req, _res, next) => {
+	console.log("\nAccessing ...");
+	console.info("Request host =>", req.headers.host);
+	console.info("Request method =>", req.method);
+	console.info("Request path =>", req.path);
+	console.info("Body =>", req.body);
+	try {
+		next();
+	} catch (err) {
+		console.error("Error =>", err);
+	}
+});
 
 app.use(routes.userRoutes);
 app.use(routes.jobRoutes);
