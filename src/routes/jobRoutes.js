@@ -5,4 +5,7 @@ const collections = require("../config/collections");
 const apiPath = `/api/${collections.jobs}`;
 const router = functions.generateRouterModule(controller, apiPath);
 
+router.post(`${apiPath}/save-job`, controller.saveJob);
+router.post(`${apiPath}/get-by-enterprise`, controller.getByEnterprise);
+
 module.exports = router;

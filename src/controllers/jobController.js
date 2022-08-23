@@ -46,14 +46,14 @@ exports.updateData = async (req, res) => {
 
 exports.insertData = async (req, res) => {
 	functions.reqAuthorization(req, res, () => {
-	const data = req.body;
-	schema.create(data, (err, docs) => {
-		if (err) {
-			res.status(422).send({ error: err });
-		} else {
-			res.send({ data: docs });
-		}
-	});
+		const data = req.body;
+		schema.create(data, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				res.send({ data: docs });
+			}
+		});
 	});
 };
 
@@ -67,5 +67,42 @@ exports.deleteData = async (req, res) => {
 				res.send({ data: docs });
 			}
 		});
+	});
+};
+
+exports.saveJob = async (req, res) => {
+	const data = req.body;
+	schema.create(data, (err, docs) => {
+		if (err) {
+			res.status(422).send({ error: err });
+		} else {
+			schema
+				.findById(docs?._id, function (errFind, docsFind) {
+					if (errFind) {
+						res.status(422).send({ error: errFind });
+					} else {
+						res.send({ data: docsFind });
+					}
+				})
+				.populate("enterpriseRef");
+		}
+	});
+};
+
+exports.getByEnterprise = async (req, res) => {
+	functions.reqAuthorization(req, res, () => {
+		const { enterpriseRef } = req.body;
+		schema
+			.find(
+				{ enterpriseRef: functions.parseId(enterpriseRef) },
+				(err, docs) => {
+					if (err) {
+						res.status(422).send({ error: err });
+					} else {
+						res.send({ data: docs });
+					}
+				},
+			)
+			.populate("enterpriseRef");
 	});
 };
