@@ -27,7 +27,7 @@ exports.getData = (req, res) => {
 	});
 };
 
-exports.updateData = async (req, res) => {
+exports.updateData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { id } = req.params;
 		const body = req.body;
@@ -41,7 +41,7 @@ exports.updateData = async (req, res) => {
 	});
 };
 
-exports.insertData = async (req, res) => {
+exports.insertData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
 		schema.create(data, (err, docs) => {
@@ -54,7 +54,7 @@ exports.insertData = async (req, res) => {
 	});
 };
 
-exports.deleteData = async (req, res) => {
+exports.deleteData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { id } = req.params;
 		schema.deleteOne({ _id: functions.parseId(id) }, (err, docs) => {
@@ -67,7 +67,7 @@ exports.deleteData = async (req, res) => {
 	});
 };
 
-exports.matchUserJob = async (req, res) => {
+exports.matchUserJob = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
 		schema.findOne(
@@ -102,7 +102,7 @@ exports.matchUserJob = async (req, res) => {
 	});
 };
 
-exports.getByUserJob = async (req, res) => {
+exports.getByUserJob = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { userRef, jobRef } = req.body;
 		schema.findOne(
@@ -121,7 +121,7 @@ exports.getByUserJob = async (req, res) => {
 	});
 };
 
-exports.getByUser = async (req, res) => {
+exports.getByUser = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { userRef } = req.body;
 		schema

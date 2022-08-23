@@ -27,7 +27,7 @@ exports.getData = (req, res) => {
 	});
 };
 
-exports.updateData = async (req, res) => {
+exports.updateData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { id } = req.params;
 		const body = req.body;
@@ -41,7 +41,7 @@ exports.updateData = async (req, res) => {
 	});
 };
 
-exports.insertData = async (req, res) => {
+exports.insertData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
 		schema.create(data, (err, docs) => {
@@ -54,7 +54,7 @@ exports.insertData = async (req, res) => {
 	});
 };
 
-exports.deleteData = async (req, res) => {
+exports.deleteData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { id } = req.params;
 		schema.deleteOne({ _id: functions.parseId(id) }, (err, docs) => {
@@ -67,7 +67,7 @@ exports.deleteData = async (req, res) => {
 	});
 };
 
-exports.matchUserJob = async (req, res) => {
+exports.matchUserJob = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
 		schema.create(data, (err, docs) => {
@@ -83,7 +83,7 @@ exports.matchUserJob = async (req, res) => {
 	});
 };
 
-exports.unmatchUserJob = async (req, res) => {
+exports.unmatchUserJob = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
 		schema.deleteOne(
@@ -102,7 +102,7 @@ exports.unmatchUserJob = async (req, res) => {
 	});
 };
 
-exports.unmatchByIds = async (req, res) => {
+exports.unmatchByIds = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
 		const favorites = Array.isArray(data?.favoritesId)
@@ -129,7 +129,7 @@ exports.unmatchByIds = async (req, res) => {
 	});
 };
 
-exports.isMatch = async (req, res) => {
+exports.isMatch = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { userRef, jobRef } = req.body;
 		schema.findOne(
@@ -148,7 +148,7 @@ exports.isMatch = async (req, res) => {
 	});
 };
 
-exports.getByUser = async (req, res) => {
+exports.getByUser = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { userRef } = req.body;
 		schema
@@ -163,7 +163,7 @@ exports.getByUser = async (req, res) => {
 	});
 };
 
-exports.getByJob = async (req, res) => {
+exports.getByJob = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { jobRef } = req.body;
 		schema.find({ jobRef: functions.parseId(jobRef) }, (err, docs) => {

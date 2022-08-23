@@ -26,7 +26,7 @@ exports.getData = (req, res) => {
 	});
 };
 
-exports.updateData = async (req, res) => {
+exports.updateData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { id } = req.params;
 		const body = req.body;
@@ -40,7 +40,7 @@ exports.updateData = async (req, res) => {
 	});
 };
 
-exports.insertData = async (req, res) => {
+exports.insertData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
 		schema.create(data, (err, docs) => {
@@ -53,7 +53,7 @@ exports.insertData = async (req, res) => {
 	});
 };
 
-exports.deleteData = async (req, res) => {
+exports.deleteData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { id } = req.params;
 		schema.deleteOne({ _id: functions.parseId(id) }, (err, docs) => {
@@ -77,7 +77,7 @@ exports.getEnterpriseByUser = (req, res) => {
 	});
 };
 
-exports.saveEnterprise = async (req, res) => {
+exports.saveEnterprise = (req, res) => {
 	const data = req.body;
 	schema.create(data, (err, docs) => {
 		if (err) {
@@ -88,7 +88,7 @@ exports.saveEnterprise = async (req, res) => {
 	});
 };
 
-exports.saveDetails = async (req, res) => {
+exports.saveDetails = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { enterpriseId, details } = req.body;
 		schema.updateOne(

@@ -7,5 +7,6 @@ const router = functions.generateRouterModule(controller, apiPath);
 
 router.post(`${apiPath}/save-job`, controller.saveJob);
 router.post(`${apiPath}/get-by-enterprise`, controller.getByEnterprise);
+router.post(`${apiPath}/delete-package-job`, controller.deletePackageJob);
 
 module.exports = router;

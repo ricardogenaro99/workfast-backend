@@ -1,4 +1,6 @@
 const schema = require("../schemas/jobSchema");
+const favoriteSchema = require("../schemas/favoriteSchema");
+const postulateSchema = require("../schemas/postulateSchema");
 const functions = require("./functions");
 
 exports.getAllData = (req, res) => {
@@ -16,21 +18,21 @@ exports.getAllData = (req, res) => {
 };
 
 exports.getData = (req, res) => {
-	functions.reqAuthorization(req, res, () => {
-		const { id } = req.params;
-		schema
-			.findOne({ _id: functions.parseId(id) }, (err, docs) => {
-				if (err) {
-					res.status(422).send({ error: err });
-				} else {
-					res.send({ data: docs });
-				}
-			})
-			.populate("enterpriseRef");
-	});
+	// functions.reqAuthorization(req, res, () => {
+	const { id } = req.params;
+	schema
+		.findOne({ _id: functions.parseId(id) }, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				res.send({ data: docs });
+			}
+		})
+		.populate("enterpriseRef");
+	// });
 };
 
-exports.updateData = async (req, res) => {
+exports.updateData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { id } = req.params;
 		const body = req.body;
@@ -44,7 +46,7 @@ exports.updateData = async (req, res) => {
 	});
 };
 
-exports.insertData = async (req, res) => {
+exports.insertData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const data = req.body;
 		schema.create(data, (err, docs) => {
@@ -57,7 +59,7 @@ exports.insertData = async (req, res) => {
 	});
 };
 
-exports.deleteData = async (req, res) => {
+exports.deleteData = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { id } = req.params;
 		schema.deleteOne({ _id: functions.parseId(id) }, (err, docs) => {
@@ -70,7 +72,7 @@ exports.deleteData = async (req, res) => {
 	});
 };
 
-exports.saveJob = async (req, res) => {
+exports.saveJob = (req, res) => {
 	const data = req.body;
 	schema.create(data, (err, docs) => {
 		if (err) {
@@ -89,7 +91,7 @@ exports.saveJob = async (req, res) => {
 	});
 };
 
-exports.getByEnterprise = async (req, res) => {
+exports.getByEnterprise = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
 		const { enterpriseRef } = req.body;
 		schema
@@ -104,5 +106,37 @@ exports.getByEnterprise = async (req, res) => {
 				},
 			)
 			.populate("enterpriseRef");
+	});
+};
+
+exports.deletePackageJob = (req, res) => {
+	functions.reqAuthorization(req, res, () => {
+		const { jobId } = req.body;
+
+		favoriteSchema.deleteMany({ jobRef: functions.parseId(jobId) }, (err3) => {
+			if (err3) {
+				res.status(422).send({ error: err3 });
+			} else {
+				postulateSchema.deleteMany(
+					{ jobRef: functions.parseId(jobId) },
+					(err2) => {
+						if (err2) {
+							res.status(422).send({ error: err2 });
+						} else {
+							schema.deleteOne(
+								{ _id: functions.parseId(jobId) },
+								(err, docs) => {
+									if (err) {
+										res.status(422).send({ error: err });
+									} else {
+										res.send({ data: docs });
+									}
+								},
+							);
+						}
+					},
+				);
+			}
+		});
 	});
 };
