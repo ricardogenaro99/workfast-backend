@@ -104,28 +104,16 @@ exports.unmatchUserJob = (req, res) => {
 
 exports.unmatchByIds = (req, res) => {
 	functions.reqAuthorization(req, res, () => {
-		const data = req.body;
-		const favorites = Array.isArray(data?.favoritesId)
-			? data?.favoritesId
-			: [data?.favoritesId];
-		const errors = [];
-		const docs = [];
+		const { favoritesId } = req.body;
+		const favorites = Array.isArray(favoritesId) ? favoritesId : [favoritesId];
 
-		favorites.forEach((id) => {
-			schema.deleteOne({ _id: functions.parseId(id) }, (err) => {
-				if (err) {
-					errors.push({ error: err, favoriteId: id });
-				} else {
-					docs.push(id);
-				}
-			});
+		schema.deleteMany({ _id: { $in: favorites } }, (err, docs) => {
+			if (err) {
+				res.status(422).send({ error: err });
+			} else {
+				res.send({ data: docs });
+			}
 		});
-
-		if (errors.length === 0) {
-			res.send({ message: messages.UNFAVORITES, data: docs });
-		} else {
-			res.send({ message: messages.UNFAVORITES, errors, data: docs });
-		}
 	});
 };
 

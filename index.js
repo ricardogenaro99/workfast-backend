@@ -12,7 +12,7 @@ app.use(cors(config.application.cors));
 
 app.all("*", (req, _res, next) => {
 	console.log("\nAccessing ...");
-	console.info("Request host =>", req.headers.host);
+	console.info("Request origin =>", req.headers.origin);
 	console.info("Request method =>", req.method);
 	console.info("Request path =>", req.path);
 	console.info("Body =>", req.body);
