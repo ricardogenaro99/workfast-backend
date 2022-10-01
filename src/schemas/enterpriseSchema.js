@@ -7,10 +7,12 @@ const EnterpriseSchema = new mongoose.Schema(
 		details: {
 			name: {
 				type: String,
+				default: "",
 				required: true,
 			},
 			description: {
 				type: String,
+				default: "",
 				required: true,
 			},
 			city: {
