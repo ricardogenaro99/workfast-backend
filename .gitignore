@@ -2,3 +2,4 @@ node_modules
 docs
 .env
 firebase-key.json
+.vscode
