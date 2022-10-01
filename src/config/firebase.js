@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { initializeApp } = require("firebase-admin/app");
 
 const firebaseConfig = {

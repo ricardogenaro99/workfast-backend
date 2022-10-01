@@ -2,7 +2,6 @@ const Stripe = require("stripe");
 const schema = require("../schemas/checkoutSchema");
 const userSchema = require("../schemas/userSchema");
 const functions = require("./functions");
-require("dotenv").config();
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
