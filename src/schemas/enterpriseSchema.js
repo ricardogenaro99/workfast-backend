@@ -8,12 +8,10 @@ const EnterpriseSchema = new mongoose.Schema(
 			name: {
 				type: String,
 				default: "",
-				required: true,
 			},
 			description: {
 				type: String,
 				default: "",
-				required: true,
 			},
 			city: {
 				type: String,
