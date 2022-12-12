@@ -12,6 +12,8 @@ app.use(express.json());
 app.use(cors(config.application.cors));
 
 app.all("*", (req, _res, next) => {
+	console.log(DB_URI);
+
 	console.log("\nAccessing ...");
 	console.info("Request origin =>", req.headers.origin);
 	console.info("Request method =>", req.method);

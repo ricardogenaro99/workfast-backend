@@ -3,3 +3,4 @@ docs
 .env
 firebase-key.json
 .vscode
+.vercel
