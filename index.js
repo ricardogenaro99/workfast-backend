@@ -11,21 +11,6 @@ app.use(express.json());
 
 app.use(cors(config.application.cors));
 
-app.all("*", (req, _res, next) => {
-	console.log(process.env.DB_URI);
-
-	console.log("\nAccessing ...");
-	console.info("Request origin =>", req.headers.origin);
-	console.info("Request method =>", req.method);
-	console.info("Request path =>", req.path);
-	console.info("Body =>", req.body);
-	try {
-		next();
-	} catch (err) {
-		console.error("Error =>", err);
-	}
-});
-
 app.use(routes.userRoutes);
 app.use(routes.jobRoutes);
 app.use(routes.checkoutRoutes);
@@ -39,3 +24,19 @@ app.listen(port, () => {
 });
 
 initDB();
+
+
+app.all("*", (req, _res, next) => {
+	console.log(process.env.MONGODB_URL);
+
+	console.log("\nAccessing ...");
+	console.info("Request origin =>", req.headers.origin);
+	console.info("Request method =>", req.method);
+	console.info("Request path =>", req.path);
+	console.info("Body =>", req.body);
+	try {
+		next();
+	} catch (err) {
+		console.error("Error =>", err);
+	}
+});
