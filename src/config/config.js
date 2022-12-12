@@ -1,8 +1,8 @@
 const allowOrigins = [
 	"http://localhost:3000",
 	"http://localhost:3001",
-	"https://workfast-postulate.herokuapp.com",
-	"https://workfast-recruiter.herokuapp.com",
+	"https://workfast-postulate.vercel.app/",
+	"https://workfast-recruiter.vercel.app/",
 ];
 
 const config = {
